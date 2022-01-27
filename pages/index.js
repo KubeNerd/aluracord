@@ -3,34 +3,6 @@ import { Box, Button, Text, TextField, Image} from '@skynexui/components';
 import React, { useState } from 'react';
 import { useRouter } from "next/router";
 
-function GlobalStyle() {
-    return (
-      <style global jsx>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          list-style: none;
-        }
-        body {
-          font-family: 'Open Sans', sans-serif;
-        }
-        /* App fit Height */ 
-        html, body, #__next {
-          min-height: 100vh;
-          display: flex;
-          flex: 1;
-        }
-        #__next {
-          flex: 1;
-        }
-        #__next > * {
-          flex: 1;
-        }
-        /* ./App fit Height */ 
-      `}</style>
-    );
-  }
 
 function Titulo(props){
      const Tag = props.tag;
@@ -71,7 +43,7 @@ export default function PaginaInicial() {
 
     return (
       <>
-        <GlobalStyle/>
+
         <Box
           styleSheet={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -92,7 +64,7 @@ export default function PaginaInicial() {
               width: '100%', maxWidth: '700px',
               borderRadius: '5px', padding: '32px', margin: '16px',
               boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-              backgroundColor: appConfig.theme.colors.neutrals[700],
+              backgroundColor:appConfig.theme.colors.neutrals[500],
             }}
           >
             {/* Formulário */}
