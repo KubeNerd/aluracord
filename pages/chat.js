@@ -1,15 +1,35 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import appConfig from "../config.json";
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNjQzMTYwNjA2LCJleHAiOjE5NTg3MzY2MDZ9.BWT_O5xjNcFGNup91ZmYRpBSw0_CwK3vahokgFJvcw0';
+const SUPABASE_URL='https://aqvvrmtsxywnvwtxxnto.supabase.co';
+
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 
 
 export default function ChatPage() {
     const [message, setMessage] = useState('');
-    const [messageOfList, setmessageOfList] = useState([]);
+    const [messageOfList, setmessageOfList] = useState([])
+
+    useEffect(() =>{
+        supabaseClient
+        .from("messages")
+        .select("*")
+        .then((dados)=>{
+            console.log(dados.data);
+            setmessageOfList(dados.data);
+        })
+
+    }, [])
 
 
+
+
+  
 
     function handleNewMessage(newMessage) {
         const message = {
@@ -17,7 +37,17 @@ export default function ChatPage() {
             text: newMessage,
             from: 'shabazzBr'
         }
-        setmessageOfList([ message, ...messageOfList])
+        supabaseClient
+        .from("messages")
+        .insert([
+            message
+        ]).then(({ data }) =>{
+
+            setmessageOfList([ data[0], ...messageOfList]);
+            // window.location.reload();
+        })
+       
+        
         setMessage('');
     }
 
@@ -167,7 +197,7 @@ function MessageList(props) {
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
-                                src={`https://github.com/shabazzBr.png`}
+                                src={`https://github.com/${mensagem.from}.png`}
                             />
                             <Text tag="strong">
                                 {mensagem.from}
