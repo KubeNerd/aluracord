@@ -2,7 +2,6 @@ import appConfig from "../config.json";
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React, { useState } from 'react';
 
-
 import { useRouter } from "next/router";
 const emptyImage = 'https://img1.gratispng.com/20180319/row/kisspng-computer-icons-google-account-user-profile-iconfin-png-icons-download-profile-5ab0301d8907a6.3404305715214960935613.jpg'
 
@@ -20,23 +19,6 @@ function Titulo(props) {
     </>
   )
 }
-
-// function HomePage(){
-
-
-//     return (
-//         <div style={{ 'backgroundColor':'purple'}}>
-//             <GlobalStyle/>
-//             <Titulo tag="h2">Boas vindas de volta!</Titulo>
-//             <h2>Discord Alura Matrix</h2>
-
-
-//         </div>
-//     )
-// }
-
-
-// export default HomePage;
 
 
 export default function PaginaInicial() {
@@ -129,8 +111,6 @@ export default function PaginaInicial() {
                 },
               }}
             />
-
-
             <Button
               type='submit'
               label='Entrar'
@@ -147,6 +127,7 @@ export default function PaginaInicial() {
 
 
           {/* Photo Area */}
+          
           <Box
             styleSheet={{
               display: 'flex',
@@ -186,6 +167,7 @@ export default function PaginaInicial() {
             >
               {username}
             </Text>
+       
           </Box>
           {/* Photo Area */}
         </Box>

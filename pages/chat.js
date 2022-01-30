@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import appConfig from "../config.json";
 import { createClient } from "@supabase/supabase-js";
-
+import { ButtonSendSticker } from '../src/components/SendStickerButton';
 const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNjQzMTYwNjA2LCJleHAiOjE5NTg3MzY2MDZ9.BWT_O5xjNcFGNup91ZmYRpBSw0_CwK3vahokgFJvcw0';
 const SUPABASE_URL='https://aqvvrmtsxywnvwtxxnto.supabase.co';
 
@@ -14,7 +14,13 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
     const [message, setMessage] = useState('');
-    const [messageOfList, setmessageOfList] = useState([]);
+    const [messageOfList, setmessageOfList] = useState([
+        {
+            id:120,
+            from:`nickminaj`,
+            text:`:sticker: https://c.tenor.com/reL2Vfc75a8AAAAC/nicki-nicki-minaj.gif`
+        }
+    ]);
     const roteamento = useRouter();
     const loggedUser = roteamento.query.username;
     console.log('Usuário logado',loggedUser)
@@ -25,7 +31,7 @@ export default function ChatPage() {
         .order("id", {ascending:false})
         .then((dados)=>{
             console.log(dados.data);
-            setmessageOfList(dados.data);
+            // setmessageOfList(dados.data);
         })
 
     }, [])
@@ -61,7 +67,7 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                body:'overflow-x: hidden',
+                body:'overflow-x: hidden;',
                 backgroundColor: appConfig.theme.colors.primary[500],
                 backgroundImage: `url(https://get.wallhere.com/photo/artwork-Keanu-Reeves-John-Wick-Chapter-3-gun-pistol-fan-art-men-pink-background-John-Wick-1950455.jpg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
@@ -136,6 +142,7 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
+                        <ButtonSendSticker/>
                     </Box>
                 </Box>
             </Box>
@@ -218,7 +225,21 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {mensagem.text}
+                       {/* {mensagem.text.startsWith(':sticker:').toString()} */}
+
+                       {mensagem.text.startsWith(':sticker:') ? (
+                          <Image src={mensagem.text.replace(':sticker:','')}/>
+                       ) : (
+                           
+                        
+                         mensagem.text
+                                
+                                
+                        )} 
+
+
+
+                        {/* {mensagem.text} */}
                     </Text>
                 );
             })}
