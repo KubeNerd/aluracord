@@ -1,4 +1,5 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import appConfig from "../config.json";
 import { createClient } from "@supabase/supabase-js";
@@ -13,12 +14,15 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
     const [message, setMessage] = useState('');
-    const [messageOfList, setmessageOfList] = useState([])
-
+    const [messageOfList, setmessageOfList] = useState([]);
+    const roteamento = useRouter();
+    const loggedUser = roteamento.query.username;
+    console.log('Usuário logado',loggedUser)
     useEffect(() =>{
         supabaseClient
         .from("messages")
         .select("*")
+        .order("id", {ascending:false})
         .then((dados)=>{
             console.log(dados.data);
             setmessageOfList(dados.data);
@@ -35,7 +39,7 @@ export default function ChatPage() {
         const message = {
             id: messageOfList.length + 1,
             text: newMessage,
-            from: 'shabazzBr'
+            from: loggedUser
         }
         supabaseClient
         .from("messages")
@@ -57,6 +61,7 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
+                body:'overflow-x: hidden',
                 backgroundColor: appConfig.theme.colors.primary[500],
                 backgroundImage: `url(https://get.wallhere.com/photo/artwork-Keanu-Reeves-John-Wick-Chapter-3-gun-pistol-fan-art-men-pink-background-John-Wick-1950455.jpg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
