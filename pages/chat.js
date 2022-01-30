@@ -31,7 +31,7 @@ export default function ChatPage() {
         .order("id", {ascending:false})
         .then((dados)=>{
             console.log(dados.data);
-            // setmessageOfList(dados.data);
+            setmessageOfList(dados.data);
         })
 
     }, [])

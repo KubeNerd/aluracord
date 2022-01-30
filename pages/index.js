@@ -3,7 +3,7 @@ import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React, { useState } from 'react';
 
 import { useRouter } from "next/router";
-const emptyImage = 'https://img1.gratispng.com/20180319/row/kisspng-computer-icons-google-account-user-profile-iconfin-png-icons-download-profile-5ab0301d8907a6.3404305715214960935613.jpg'
+const emptyImage = 'https://avatars.githubusercontent.com/u/76989?v=4'
 
 function Titulo(props) {
   const Tag = props.tag;
