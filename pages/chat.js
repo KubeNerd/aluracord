@@ -69,9 +69,6 @@ export default function ChatPage() {
             .then(({ data }) =>{
 
             console.log('Criando mensagem', data)
-            setInterval(() =>{
-                window.location.reload();
-            },1000)
             // setmessageOfList([ data[0], ...messageOfList]);
             // window.location.reload();
         })
