@@ -1,4 +1,5 @@
 import appConfig from "../config.json";
+import Head from 'next/head';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React, { useState } from 'react';
 
@@ -28,6 +29,10 @@ export default function PaginaInicial() {
 
   return (
     <>
+
+     <Head>
+	<title>AluraCord - Imersão React/Next</title>
+     </Head>
 
       <Box
         styleSheet={{
