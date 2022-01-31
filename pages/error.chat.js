@@ -9,14 +9,7 @@ const SUPABASE_URL='https://aqvvrmtsxywnvwtxxnto.supabase.co';
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-function observerCurrentMessages(addMessage) {
-    return supabaseClient
-      .from('mensagens')
-      .on('INSERT', (respostaLive) => {
-        addMessage(respostaLive.new);
-      })
-      .subscribe();
-  }
+
 
 
 export default function ChatPage() {
@@ -25,54 +18,35 @@ export default function ChatPage() {
     const roteamento = useRouter();
     const loggedUser = roteamento.query.username;
     
+    
+    
     useEffect(() =>{
         supabaseClient
         .from("messages")
         .select("*")
-        .order("id", { ascending:false })
-        .then(({ data })=>{
-            setmessageOfList(data);
+        .order("id", {ascending:false})
+        .then((dados)=>{
+            console.log(dados.data);
+            setmessageOfList(dados.data);
         })
-
-        const subscription  = observerCurrentMessages((newMessage) =>{
-            console.log('Nova mensagem:', newMessage);
-            console.log('Lista de mensagens:', messageOfList);
-    
-            setmessageOfList((valueCurrent) =>{
-              return  [
-                    newMessage,
-                    ...valueCurrent
-                ]
-            })
-            
-    
-        });
-
-        return () =>{
-            subscription.unsubscribe();
-        }
 
     }, [])
 
+
+
     function handleNewMessage(newMessage) {
         const message = {
-            // id: messageOfList.length + 1,
+            id: messageOfList.length + 1,
             text: newMessage,
             from: loggedUser
         }
-
         supabaseClient
-           .from("messages")
-            .insert([
-                message
-            ])
-            .then(({ data }) =>{
+        .from("messages")
+        .insert([
+            message
+        ]).then(({ data }) =>{
 
-            console.log('Criando mensagem', data)
-            setInterval(() =>{
-                window.location.reload();
-            },1000)
-            // setmessageOfList([ data[0], ...messageOfList]);
+            setmessageOfList([ data[0], ...messageOfList]);
             // window.location.reload();
         })
        
